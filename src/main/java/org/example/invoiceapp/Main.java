@@ -10,6 +10,7 @@ public class Main {
     public static void main(String[] args) {
         String consumptionDataFile = "src/main/resources/input.txt";
         String lookupFile = "src/main/resources/lookup.txt";
+        String year = "2023"; // Add the year here
 
         List<String> records = DataReader.readConsumptionData(consumptionDataFile);
         Map<String, String> customerNames = DataReader.readCustomerLookup(lookupFile);
@@ -22,7 +23,7 @@ public class Main {
             String customerName = customerNames.get(customerId);
 
             if (customerName != null) {
-                BillGenerator.generateTxtBill(customerId, customerName, usage);
+                BillGenerator.generateTxtBill(customerId, customerName, usage, year); // Pass the year as the fourth argument
             } else {
                 LOGGER.warning("Customer name not found for ID: " + customerId);
             }
