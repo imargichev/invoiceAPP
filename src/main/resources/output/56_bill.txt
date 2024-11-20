@@ -1,0 +1,8 @@
+Customer Name: Darlene Rios
+Customer ID: 56
+
+Daytime Usage: 2081 units @ 0.15 BGN/unit = 312,15 BGN
+Nighttime Usage: 2484 units @ 0.05 BGN/unit = 124,20 BGN
+
+Total Usage: 4565 units
+Total Cost: 436,35 BGN

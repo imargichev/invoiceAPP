@@ -1,0 +1,8 @@
+Customer Name: Gerard Kelley
+Customer ID: 123
+
+Daytime Usage: 3889 units @ 0.15 BGN/unit = 583,35 BGN
+Nighttime Usage: 4927 units @ 0.05 BGN/unit = 246,35 BGN
+
+Total Usage: 8816 units
+Total Cost: 829,70 BGN

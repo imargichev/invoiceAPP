@@ -1,0 +1,8 @@
+Customer Name: Chuck Norris
+Customer ID: 69
+
+Daytime Usage: 2232 units @ 0.15 BGN/unit = 334,80 BGN
+Nighttime Usage: 3854 units @ 0.05 BGN/unit = 192,70 BGN
+
+Total Usage: 6086 units
+Total Cost: 527,50 BGN

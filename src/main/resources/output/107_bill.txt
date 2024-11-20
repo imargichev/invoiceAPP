@@ -1,0 +1,8 @@
+Customer Name: Heather Webster
+Customer ID: 107
+
+Daytime Usage: 616 units @ 0.15 BGN/unit = 92,40 BGN
+Nighttime Usage: 1069 units @ 0.05 BGN/unit = 53,45 BGN
+
+Total Usage: 1685 units
+Total Cost: 145,85 BGN

@@ -1,0 +1,8 @@
+Customer Name: Sabrina Romero
+Customer ID: 117
+
+Daytime Usage: 592 units @ 0.15 BGN/unit = 88,80 BGN
+Nighttime Usage: 874 units @ 0.05 BGN/unit = 43,70 BGN
+
+Total Usage: 1466 units
+Total Cost: 132,50 BGN

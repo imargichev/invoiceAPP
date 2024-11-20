@@ -1,0 +1,8 @@
+Customer Name: Michael Flores
+Customer ID: 204
+
+Daytime Usage: 560 units @ 0.15 BGN/unit = 84,00 BGN
+Nighttime Usage: 884 units @ 0.05 BGN/unit = 44,20 BGN
+
+Total Usage: 1444 units
+Total Cost: 128,20 BGN

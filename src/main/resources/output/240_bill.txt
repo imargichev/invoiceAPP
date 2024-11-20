@@ -1,0 +1,8 @@
+Customer Name: Betsy Copeland
+Customer ID: 240
+
+Daytime Usage: 1186 units @ 0.15 BGN/unit = 177,90 BGN
+Nighttime Usage: 1338 units @ 0.05 BGN/unit = 66,90 BGN
+
+Total Usage: 2524 units
+Total Cost: 244,80 BGN

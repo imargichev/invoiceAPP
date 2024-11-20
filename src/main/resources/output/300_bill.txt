@@ -1,0 +1,8 @@
+Customer Name: Ivan Ivanov
+Customer ID: 300
+
+Daytime Usage: 539 units @ 0.15 BGN/unit = 80,85 BGN
+Nighttime Usage: 958 units @ 0.05 BGN/unit = 47,90 BGN
+
+Total Usage: 1497 units
+Total Cost: 128,75 BGN
