@@ -1,16 +1,24 @@
-package org.example.invoiceapp;
+package org.example.invoiceapp.billing;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import org.example.invoiceapp.data.CustomerUsage;
 
 import java.io.*;
 import java.nio.file.*;
 import java.util.logging.*;
 
+/*The PdfBillGenerator class is responsible for generating PDF bills for customers based on their electricity usage.
+ It provides a method to generate a PDF bill for a specific customer.*/
 public class PdfBillGenerator {
     private static final String OUTPUT_DIR_PDF = "src/main/resources/output/pdf/";
     private static final Logger LOGGER = Logger.getLogger(PdfBillGenerator.class.getName());
 
+    /*Purpose: Generates a PDF bill for a specific customer based on their electricity usage data.
+      Parameters: String customerId - the ID of the customer.
+                  String customerName - the name of the customer.
+                  CustomerUsage usage - the electricity usage data for the customer.
+                  String year - the year for which the bill is generated.*/
     public static void generatePdfBill(String customerId, String customerName, CustomerUsage usage, String year) {
         try {
             Files.createDirectories(Paths.get(OUTPUT_DIR_PDF));

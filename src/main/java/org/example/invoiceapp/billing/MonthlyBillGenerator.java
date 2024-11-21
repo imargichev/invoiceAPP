@@ -1,10 +1,15 @@
-package org.example.invoiceapp;
+package org.example.invoiceapp.billing;
+
+import org.example.invoiceapp.data.CustomerUsage;
 
 import java.io.*;
 import java.nio.file.*;
 import java.sql.*;
 import java.util.*;
 import java.util.logging.*;
+
+/*The MonthlyBillGenerator class is responsible for generating monthly electricity bills for customers.
+  It reads customer data, generates bill files, and saves the bill details to a database.*/
 
 public class MonthlyBillGenerator {
     private static final String LOOKUP_FILE = "src/main/resources/lookup.txt";
@@ -14,6 +19,8 @@ public class MonthlyBillGenerator {
     private static final String DB_PASSWORD = "SUP3R_p@ss";
     private static final Logger LOGGER = Logger.getLogger(MonthlyBillGenerator.class.getName());
 
+    /*Purpose: Loads the MySQL JDBC driver and creates the bills table if it does not exist.
+    Example Usage: Automatically executed when the class is loaded.*/
     static {
         try {
             // Load MySQL JDBC driver
@@ -39,6 +46,7 @@ public class MonthlyBillGenerator {
         }
     }
 
+    //Reads customer lookup data from a file and returns it as a map of customer IDs to customer names.
     public static Map<String, String> loadCustomerNames() {
         Map<String, String> customerNames = new HashMap<>();
 
@@ -56,6 +64,7 @@ public class MonthlyBillGenerator {
         return customerNames;
     }
 
+    //Generates a bill file for a customer and saves the bill details to a database.
     public static void generateBill(String customerId, String customerName, CustomerUsage usage) {
         String outputFileName = OUTPUT_DIR + customerId + ".txt";
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(outputFileName))) {
@@ -79,6 +88,7 @@ public class MonthlyBillGenerator {
         saveBillToDatabase(customerId, customerName, usage);
     }
 
+    //Saves the bill details to a MySQL database.
     private static void saveBillToDatabase(String customerId, String customerName, CustomerUsage usage) {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(

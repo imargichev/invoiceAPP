@@ -1,13 +1,15 @@
-package org.example.invoiceapp;
+package org.example.invoiceapp.billing;
 
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
+import org.example.invoiceapp.data.CustomerUsage;
 
 import java.io.*;
 import java.nio.file.*;
 import java.sql.*;
 import java.util.logging.*;
-
+/*The BillGenerator class is responsible for generating text and PDF bills for customers
+ based on their usage data and saving the bill information to a database. */
 public class BillGenerator {
     private static final String OUTPUT_DIR = "src/main/resources/output/txt/";
     private static final String PDF_OUTPUT_DIR = "src/main/resources/output/pdf/";
@@ -16,13 +18,19 @@ public class BillGenerator {
     private static final String DB_PASSWORD = "SUP3R_p@ss";
     private static final Logger LOGGER = Logger.getLogger(BillGenerator.class.getName());
 
-    public static void generateTxtBill(String customerId, String customerName, CustomerUsage usage, String year) {
+    /*This method generates a text bill for a customer and saves it to a file.
+     It also calls methods to generate a PDF bill and save the bill to a database.*/
+    public static void generateTxtBill(String customerId, String customerName, CustomerUsage usage, String year, String issueDate) {
+        // Sanitize customer name for file naming
         String sanitizedCustomerName = customerName.replaceAll("[^a-zA-Z0-9]", "_");
+        //you should change the date here because it will be always the same
         String outputFileName = OUTPUT_DIR + customerId + "_" + sanitizedCustomerName + "_" + year + "_bill.txt";
+        // Calculate costs
         double daytimeCost = usage.getDaytimeUsage() * 0.15;
         double nighttimeCost = usage.getNighttimeUsage() * 0.05;
         double totalCost = daytimeCost + nighttimeCost;
 
+        // Write bill details to a text file
         try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(outputFileName))) {
             writer.write("Customer Name: " + customerName);
             writer.newLine();
@@ -43,12 +51,14 @@ public class BillGenerator {
             LOGGER.log(Level.SEVERE, "Failed to generate TXT bill", e);
         }
 
-        generatePdfBill(customerId, sanitizedCustomerName, customerName, usage, daytimeCost, nighttimeCost, totalCost, year);
+        // Generate PDF bill and save to database
+        generatePdfBill(customerId, sanitizedCustomerName, customerName, usage, daytimeCost, nighttimeCost, totalCost, year, issueDate);
         saveBillToDatabase(customerId, customerName, usage);
     }
-
-    private static void generatePdfBill(String customerId, String sanitizedCustomerName, String customerName, CustomerUsage usage, double daytimeCost, double nighttimeCost, double totalCost, String year) {
-        String outputFileName = PDF_OUTPUT_DIR + customerId + "_" + sanitizedCustomerName + "_" + year + "_bill.pdf";
+    /*This method generates a PDF bill for a customer and saves it to a file.*/
+    private static void generatePdfBill(String customerId, String sanitizedCustomerName, String customerName, CustomerUsage usage, double daytimeCost, double nighttimeCost, double totalCost, String year, String issueDate) {
+        String formattedDate = issueDate.replace(".", "-");
+        String outputFileName = PDF_OUTPUT_DIR + customerId + "_" + sanitizedCustomerName + "_" + formattedDate + "_bill.pdf";
         Document document = new Document();
 
         try {
@@ -81,7 +91,7 @@ public class BillGenerator {
             infoTable.setSpacingBefore(10f);
             infoTable.setSpacingAfter(10f);
 
-            PdfPCell cell1 = new PdfPCell(new Phrase("Дата на издаване: 21.11.2024", regularFont));
+            PdfPCell cell1 = new PdfPCell(new Phrase("Дата на издаване: " + issueDate, regularFont));
             cell1.setBorder(Rectangle.NO_BORDER);
             infoTable.addCell(cell1);
 
@@ -142,6 +152,7 @@ public class BillGenerator {
         }
     }
 
+    //This method adds a header cell to a PDF table.
     private static void addTableHeader(PdfPTable table, String headerTitle, Font font) {
         PdfPCell header = new PdfPCell();
         header.setBackgroundColor(BaseColor.LIGHT_GRAY);
@@ -150,12 +161,14 @@ public class BillGenerator {
         table.addCell(header);
     }
 
+    //This method adds a cell with text to a PDF table.
     private static void addTableCell(PdfPTable table, String text, Font font) {
         PdfPCell cell = new PdfPCell(new Phrase(text, font));
         cell.setPadding(5);
         table.addCell(cell);
     }
 
+    //This inner class handles the footer of each page in the PDF document
     private static class FooterHandler extends PdfPageEventHelper {
         private Font sectionTitleFont;
         private Font regularFont;
@@ -170,7 +183,6 @@ public class BillGenerator {
             // Add payment method and thank you note
             ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_LEFT, new Phrase("Метод на плащане:", sectionTitleFont), 36, 50, 0);
             ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_LEFT, new Phrase("Плащането може да се извърши чрез банков превод или на каса.", regularFont), 36, 40, 0);
-            //ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_LEFT, new Phrase("Моля, упоменете номера на фактурата при извършване на плащането.", regularFont), 36, 40, 0);
             ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_LEFT, new Phrase("Благодарим Ви, че използвате нашите услуги!", regularFont), 36, 30, 0);
 
             PdfPTable footer = new PdfPTable(1);
@@ -184,6 +196,10 @@ public class BillGenerator {
         }
     }
 
+    /*This method saves the bill details to a database.
+    The saveBillToDatabase method is responsible for saving the bill details to a database.
+     It takes the customer ID, customer name, and usage data as parameters, calculates the costs,
+     and inserts the bill information into the bills table in the database.*/
     private static void saveBillToDatabase(String customerId, String customerName, CustomerUsage usage) {
         double daytimeCost = usage.getDaytimeUsage() * 0.15;
         double nighttimeCost = usage.getNighttimeUsage() * 0.05;

@@ -1,0 +1,77 @@
+1. Introduction
+Project Overview: Explain that the application is designed to manage electricity billing for customers. It reads consumption data, calculates usage, generates bills, and saves them to a database.
+
+2. Key Components
+DataReader: Reads consumption and customer data from files.
+MonthlyUsageCalculator: Calculates monthly electricity usage for each customer.
+MonthlyBillGenerator: Generates monthly bills and saves them to a database.
+PdfBillGenerator: Generates PDF versions of the bills.
+RecordValidator: Validates records and separates valid and invalid records.
+
+
+DataReader
+Purpose: Reads data from files.
+Methods:
+readConsumptionData(String filePath): Reads consumption data and returns a list of strings.
+readCustomerLookup(String filePath): Reads customer lookup data and returns a map of customer IDs to names.
+
+MonthlyUsageCalculator
+Purpose: Calculates monthly electricity usage.
+Method:
+calculateMonthlyUsage(List<String> records): Processes records to compute daytime and nighttime usage.
+
+MonthlyBillGenerator
+Purpose: Generates monthly bills and saves them to a database.
+Methods:
+loadCustomerNames(): Loads customer names from a file.
+generateBill(String customerId, String customerName, CustomerUsage usage): Generates a bill and saves it to a database.
+
+PdfBillGenerator
+Purpose: Generates PDF bills.
+Method:
+generatePdfBill(String customerId, String customerName, CustomerUsage usage, String year): Creates a PDF bill for a customer.
+
+RecordValidator
+Purpose: Validates records and separates valid and invalid records.
+Method:
+validateRecords(String filePath): Validates records and writes invalid records to a separate file.
+
+
+From here :
+
+Presentation Outline for the Invoice Application
+1. Introduction
+Project Overview: Explain that the application is designed to manage electricity billing for customers. It reads consumption data, calculates usage, generates bills, and saves them to a database.
+2. Key Components
+DataReader: Reads consumption and customer data from files.
+MonthlyUsageCalculator: Calculates monthly electricity usage for each customer.
+MonthlyBillGenerator: Generates monthly bills and saves them to a database.
+PdfBillGenerator: Generates PDF versions of the bills.
+RecordValidator: Validates records and separates valid and invalid records.
+3. Detailed Explanation of Each Component
+DataReader
+Purpose: Reads data from files.
+Methods:
+readConsumptionData(String filePath): Reads consumption data and returns a list of strings.
+readCustomerLookup(String filePath): Reads customer lookup data and returns a map of customer IDs to names.
+
+MonthlyUsageCalculator
+Purpose: Calculates monthly electricity usage.
+Method:
+calculateMonthlyUsage(List<String> records): Processes records to compute daytime and nighttime usage.
+
+MonthlyBillGenerator
+Purpose: Generates monthly bills and saves them to a database.
+Methods:
+loadCustomerNames(): Loads customer names from a file.
+generateBill(String customerId, String customerName, CustomerUsage usage): Generates a bill and saves it to a database.
+
+PdfBillGenerator
+Purpose: Generates PDF bills.
+Method:
+generatePdfBill(String customerId, String customerName, CustomerUsage usage, String year): Creates a PDF bill for a customer.
+
+RecordValidator
+Purpose: Validates records and separates valid and invalid records.
+Method:
+validateRecords(String filePath): Validates records and writes invalid records to a separate file.

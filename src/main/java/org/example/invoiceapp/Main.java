@@ -1,5 +1,11 @@
 package org.example.invoiceapp;
 
+import org.example.invoiceapp.billing.BillGenerator;
+import org.example.invoiceapp.billing.MonthlyUsageCalculator;
+import org.example.invoiceapp.data.CustomerUsage;
+import org.example.invoiceapp.data.DataReader;
+import org.example.invoiceapp.data.RecordValidator;
+
 import java.util.List;
 import java.util.Map;
 import java.util.logging.*;
@@ -23,10 +29,22 @@ public class Main {
             String customerName = customerNames.get(customerId);
 
             if (customerName != null) {
-                BillGenerator.generateTxtBill(customerId, customerName, usage, year); // Pass the year as the fourth argument
+                // Extract the issue date from the record
+                String issueDate = extractIssueDate(records, customerId);
+                BillGenerator.generateTxtBill(customerId, customerName, usage, year, issueDate); // Pass the issue date as the fifth argument
             } else {
                 LOGGER.warning("Customer name not found for ID: " + customerId);
             }
         }
+    }
+
+    private static String extractIssueDate(List<String> records, String customerId) {
+        for (String record : records) {
+            String[] fields = record.split(",");
+            if (fields[0].equals(customerId)) {
+                return fields[1]; // Assuming the date is the second field
+            }
+        }
+        return "01.01.1970"; // Default date if not found
     }
 }

@@ -1,8 +1,15 @@
-package org.example.invoiceapp;
+package org.example.invoiceapp.billing;
+
+import org.example.invoiceapp.data.CustomerUsage;
 
 import java.util.*;
 
+/*The MonthlyUsageCalculator class is responsible for calculating the monthly electricity usage for each customer.
+ It provides a method to calculate the daytime and nighttime usage based on the consumption data.*/
+
 public class MonthlyUsageCalculator {
+
+    //Calculates the daytime and nighttime electricity usage for each customer based on the consumption data.
     public static Map<String, CustomerUsage> calculateMonthlyUsage(List<String> records) {
         Map<String, CustomerUsage> usageMap = new HashMap<>();
         for (String record : records) {
