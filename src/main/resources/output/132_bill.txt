@@ -1,8 +1,0 @@
-Customer Name: Ruben Huff
-Customer ID: 132
-
-Daytime Usage: 521 units @ 0.15 BGN/unit = 78,15 BGN
-Nighttime Usage: 1060 units @ 0.05 BGN/unit = 53,00 BGN
-
-Total Usage: 1581 units
-Total Cost: 131,15 BGN

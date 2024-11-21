@@ -1,8 +1,0 @@
-Customer Name: Wilbert Horton
-Customer ID: 213
-
-Daytime Usage: 1081 units @ 0.15 BGN/unit = 162,15 BGN
-Nighttime Usage: 1948 units @ 0.05 BGN/unit = 97,40 BGN
-
-Total Usage: 3029 units
-Total Cost: 259,55 BGN

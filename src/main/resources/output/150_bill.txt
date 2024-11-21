@@ -1,8 +1,0 @@
-Customer Name: Tricia Higgins
-Customer ID: 150
-
-Daytime Usage: 1997 units @ 0.15 BGN/unit = 299,55 BGN
-Nighttime Usage: 2350 units @ 0.05 BGN/unit = 117,50 BGN
-
-Total Usage: 4347 units
-Total Cost: 417,05 BGN

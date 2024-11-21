@@ -1,8 +1,0 @@
-Customer Name: Darrell Frazier
-Customer ID: 201
-
-Daytime Usage: 5058 units @ 0.15 BGN/unit = 758,70 BGN
-Nighttime Usage: 6693 units @ 0.05 BGN/unit = 334,65 BGN
-
-Total Usage: 11751 units
-Total Cost: 1093,35 BGN
