@@ -14,33 +14,7 @@ This is an Invoice Generator application that processes electricity consumption 
 - MySQL database
 - Logging (Java `Logger`)
 
-## Project Structure
-invoiceapp/
-├── src/
-│   ├── main/
-│   │   ├── java/
-│   │   │   └── org/
-│   │   │       └── example/
-│   │   │           └── invoiceapp/
-│   │   │               ├── billing/
-│   │   │               │   ├── BillGenerator.java
-│   │   │               │   ├── MonthlyBillGenerator.java
-│   │   │               │   └── PdfBillGenerator.java
-│   │   │               ├── data/
-│   │   │               │   ├── CustomerUsage.java
-│   │   │               │   ├── DataReader.java
-│   │   │               │   └── RecordValidator.java
-│   │   │               ├── util/
-│   │   │               │   └── ConfigLoader.java
-│   │   │               └── Main.java
-│   └── resources/
-│       ├── application.properties
-│       ├── input.txt
-│       ├── lookup.txt
-│       └── output/
-│           ├── error_records/
-│           └── pdf/
-└── README.md
+
 
 markdown
 Copy code
