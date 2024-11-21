@@ -49,7 +49,10 @@ public class BillGenerator {
 
 
 
+
+    //This is very nice version
     private static void generatePdfBill(String customerId, String sanitizedCustomerName, String customerName, CustomerUsage usage, double daytimeCost, double nighttimeCost, double totalCost, String year) {
+
         String outputFileName = PDF_OUTPUT_DIR + customerId + "_" + sanitizedCustomerName + "_" + year + "_bill.pdf";
         Document document = new Document();
 
