@@ -248,19 +248,19 @@ public class BillGenerator {
      * @param usage        electricity usage details
      */
     private static void saveBillToDatabase(String customerId, String customerName, CustomerUsage usage) {
-        double daytimeCost = usage.getDaytimeUsage() * 0.15;
-        double nighttimeCost = usage.getNighttimeUsage() * 0.05;
-
+        LOGGER.info("Saving bill to database for customer ID: " + customerId);
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
              PreparedStatement pstmt = conn.prepareStatement(
                      "INSERT INTO bills (customer_id, customer_name, daytime_usage, nighttime_usage, daytime_cost, nighttime_cost) VALUES (?, ?, ?, ?, ?, ?)")) {
+            // Bind parameters to the prepared statement
             pstmt.setString(1, customerId);
             pstmt.setString(2, customerName);
             pstmt.setInt(3, usage.getDaytimeUsage());
             pstmt.setInt(4, usage.getNighttimeUsage());
-            pstmt.setDouble(5, daytimeCost);
-            pstmt.setDouble(6, nighttimeCost);
-            pstmt.executeUpdate();
+            pstmt.setDouble(5, usage.getDaytimeUsage() * 0.15);
+            pstmt.setDouble(6, usage.getNighttimeUsage() * 0.05);
+            int rowsAffected = pstmt.executeUpdate();
+            LOGGER.info("Rows affected: " + rowsAffected);
             LOGGER.info("Bill saved to database for customer ID: " + customerId);
         } catch (SQLException e) {
             LOGGER.log(Level.SEVERE, "Failed to save bill to database", e);
