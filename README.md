@@ -1,6 +1,6 @@
 # InvoiceApp
 
-InvoiceApp is a Java-based application that generates and manages customer invoices. It supports generating both text and PDF bills based on customer usage data and saving the bill information to a database.
+InvoiceApp is a Java-based application that generates and manages customer invoices. It supports generating text and PDF bills based on customer usage data and saving the bill information to a database.
 
 ## Features
 
@@ -24,6 +24,27 @@ InvoiceApp is a Java-based application that generates and manages customer invoi
 - Java 11 or higher
 - Maven
 - MySQL
+
+# Data Field Definitions
+
+The table below describes the fields used in the provided data files:
+
+| **Field Number** | **Name**            | **Description**                                                                                  |
+|-------------------|---------------------|--------------------------------------------------------------------------------------------------|
+| 1                 | **Customer ID**     | The unique ID of the customer (e.g., `300` refers to a customer with ID `300`).                 |
+| 2                 | **Date**            | The date of consumption in the format `dd.mm.yyyy`.                                             |
+| 3                 | **Usage1**          | Energy usage during the period `00:00 - 05:59`.                                                 |
+| 4                 | **Usage2**          | Energy usage during the period `06:00 - 11:59`.                                                 |
+| 5                 | **Usage3**          | Energy usage during the period `12:00 - 17:59`.                                                 |
+| 6                 | **Usage4**          | Energy usage during the period `18:00 - 23:59`.                                                 |
+| 7                 | **Quality**         | Data quality indicator:                                                                         |
+|                   |                     | - **A**: Actual reading (reported by the smart meter).                                          |
+|                   |                     | - **E**: Estimated reading (precise data unavailable).                                          |
+| 8                 | **Error Code**      | Error codes indicating issues:                                                                  |
+|                   |                     | - `76`: Communication failure.                                                                 |
+|                   |                     | - `75`: Other errors (see "Error Description").                                                 |
+| 9                 | **Error Description** | Free-text description of errors for cases where `Error Code = 0`.                              |
+ 
 
 ### Installation
 
@@ -71,3 +92,6 @@ Run the application using the command mentioned above.
 The generated bills will be saved in the directories specified in pdf.output.path and txt.output.path.
 Logging
 The application uses Java's built-in logging framework. Log messages are configured to be displayed at the INFO level by default. You can change the log level in the application.properties file.
+
+
+
