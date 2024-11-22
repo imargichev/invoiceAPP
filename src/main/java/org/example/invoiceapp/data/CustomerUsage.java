@@ -1,31 +1,80 @@
 package org.example.invoiceapp.data;
 
-/*The CustomerUsage class is designed to store and manage the daytime and nighttime electricity usage for a customer.
- It provides methods to add usage and retrieve the current usage values.*/
+/**
+ * The `CustomerUsage` class represents a customer's electricity usage,
+ * specifically divided into daytime and nighttime usage.
+ * It provides methods to manage (add to) usage data and retrieve the current values.
+ * *
+ * Responsibilities:
+ * - Track electricity usage for daytime and nighttime separately.
+ * - Allow updates to usage values.
+ * - Provide access to current usage information.
+ */
 public class CustomerUsage {
 
-    //An integer representing the amount of electricity used during the daytime.
+    /**
+     * The amount of electricity (in kWh) consumed during the daytime.
+     */
     private int daytimeUsage;
-    //An integer representing the amount of electricity used during the
+
+    /**
+     * The amount of electricity (in kWh) consumed during the nighttime.
+     */
     private int nighttimeUsage;
 
+    /**
+     * Constructs a new `CustomerUsage` object with specified initial values for
+     * daytime and nighttime usage.
+     *
+     * @param daytimeUsage   initial amount of daytime electricity usage (in kWh)
+     * @param nighttimeUsage initial amount of nighttime electricity usage (in kWh)
+     */
+    public CustomerUsage(int daytimeUsage, int nighttimeUsage) {
+        this.daytimeUsage = daytimeUsage;
+        this.nighttimeUsage = nighttimeUsage;
+    }
 
-    //Adds a specified amount of usage to the current daytime usage.
+    /**
+     * Constructs a new `CustomerUsage` object with zero usage for both daytime
+     * and nighttime.
+     */
+    public CustomerUsage() {
+        this.daytimeUsage = 0;
+        this.nighttimeUsage = 0;
+    }
+
+    /**
+     * Adds the specified amount of usage to the current daytime usage.
+     *
+     * @param usage the amount of electricity to add to daytime usage (in kWh)
+     */
     public void addDaytimeUsage(int usage) {
         this.daytimeUsage += usage;
     }
 
-    //Adds a specified amount of usage to the current nighttime usage.
+    /**
+     * Adds the specified amount of usage to the current nighttime usage.
+     *
+     * @param usage the amount of electricity to add to nighttime usage (in kWh)
+     */
     public void addNighttimeUsage(int usage) {
         this.nighttimeUsage += usage;
     }
 
-    //Returns the current daytime usage.
+    /**
+     * Returns the current amount of daytime electricity usage.
+     *
+     * @return the daytime electricity usage (in kWh)
+     */
     public int getDaytimeUsage() {
         return daytimeUsage;
     }
 
-    //Returns the current nighttime usage.
+    /**
+     * Returns the current amount of nighttime electricity usage.
+     *
+     * @return the nighttime electricity usage (in kWh)
+     */
     public int getNighttimeUsage() {
         return nighttimeUsage;
     }

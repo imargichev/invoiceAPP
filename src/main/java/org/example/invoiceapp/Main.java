@@ -12,34 +12,57 @@ import org.example.invoiceapp.util.Initializer;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.*;
-
+/**
+ * Main class for the InvoiceApp application.
+ *
+ * <p>
+ * This class orchestrates the processing of electricity consumption data and
+ * customer lookup information to generate monthly usage summaries and bills
+ * for each customer. The application validates records, calculates usage,
+ * and generates text-based bills for valid customer records.
+ * </p>
+ *
+ * <p>
+ * Workflow:
+ * 1. Initialize required directories and load file paths from configuration.
+ * 2. Read consumption data and customer lookup data from the specified files.
+ * 3. Validate the consumption records and filter out invalid entries.
+ * 4. Calculate the monthly usage for each customer based on the validated records.
+ * 5. Generate bills for each customer using their usage data and lookup information.
+ * </p>
+ */
 public class Main {
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
+    /**
+     * Entry point of the application.
+     *
+     * @param args command-line arguments (not used in this application)
+     */
     public static void main(String[] args) {
-        // Ensure that all directory exists and get the file paths
+        // Ensure required directories exist and load file paths
         Initializer.initialize();
         String consumptionDataFile = ConfigLoader.getProperty("consumption.data.path");
         String lookupFile = ConfigLoader.getProperty("customer.lookup.path");
 
-        // Reading the consumption and customer data from the txt files
+        // Read data from files
         List<String> records = DataReader.readConsumptionData(consumptionDataFile);
         Map<String, String> customerNames = DataReader.readCustomerLookup(lookupFile);
 
-        // Validate records directly from the records list
+        // Validate and filter records
         List<String> validRecords = RecordValidator.validateRecords(records);
         Map<String, CustomerUsage> usageMap = MonthlyUsageCalculator.calculateMonthlyUsage(validRecords);
 
-        // Generate bills for each customer
+        // Generate bills for customers
         for (Map.Entry<String, CustomerUsage> entry : usageMap.entrySet()) {
             String customerId = entry.getKey();
             CustomerUsage usage = entry.getValue();
             String customerName = customerNames.get(customerId);
 
             if (customerName != null) {
-                // Extract the issue date from the records for the customer
+                // Extract issue date from records
                 String issueDate = extractIssueDate(records, customerId);
-                // Generate the text bill
+                // Generate text bill
                 BillGenerator.generateTxtBill(customerId, customerName, usage, issueDate);
             } else {
                 LOGGER.warning("Customer name not found for ID: " + customerId);
@@ -47,6 +70,14 @@ public class Main {
         }
     }
 
+    /**
+     * Extracts the issue date for a given customer from the consumption records.
+     *
+     * @param records    the list of consumption records
+     * @param customerId the ID of the customer whose issue date is to be retrieved
+     * @return the issue date in `dd.mm.yyyy` format if found, or a default date of `01.01.1970`
+     *         if the date is not found in the records
+     */
     private static String extractIssueDate(List<String> records, String customerId) {
         for (String record : records) {
             String[] fields = record.split(",");
@@ -54,6 +85,6 @@ public class Main {
                 return fields[1]; // Assuming the date is the second field in the record
             }
         }
-        return "01.01.1970"; // Default date if not found
+        return "01.01.1970"; // Default date if no match is found
     }
 }
