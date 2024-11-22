@@ -1,6 +1,7 @@
 package org.example.invoiceapp.billing;
 
 import org.example.invoiceapp.data.CustomerUsage;
+import org.example.invoiceapp.util.ConfigLoader;
 
 import java.io.*;
 import java.nio.file.*;
@@ -12,11 +13,11 @@ import java.util.logging.*;
   It reads customer data, generates bill files, and saves the bill details to a database.*/
 
 public class MonthlyBillGenerator {
-    private static final String LOOKUP_FILE = "src/main/resources/lookup.txt";
-    private static final String OUTPUT_DIR = "src/main/resources/output/";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/invoiceapp";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "SUP3R_p@ss";
+    private static final String LOOKUP_FILE = ConfigLoader.getProperty("customer.lookup.path");
+    private static final String OUTPUT_DIR = ConfigLoader.getProperty("mainDir.output");
+    private static final String DB_URL = ConfigLoader.getProperty("db.url");
+    private static final String DB_USER = ConfigLoader.getProperty("db.username");
+    private static final String DB_PASSWORD = ConfigLoader.getProperty("db.password");
     private static final Logger LOGGER = Logger.getLogger(MonthlyBillGenerator.class.getName());
 
     /*Purpose: Loads the MySQL JDBC driver and creates the bills table if it does not exist.

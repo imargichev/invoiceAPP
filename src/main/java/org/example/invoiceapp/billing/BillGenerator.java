@@ -3,6 +3,7 @@ package org.example.invoiceapp.billing;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import org.example.invoiceapp.data.CustomerUsage;
+import org.example.invoiceapp.util.ConfigLoader;
 
 import java.io.*;
 import java.nio.file.*;
@@ -11,17 +12,19 @@ import java.util.logging.*;
 /*The BillGenerator class is responsible for generating text and PDF bills for customers
  based on their usage data and saving the bill information to a database. */
 public class BillGenerator {
-    private static final String OUTPUT_DIR = "src/main/resources/output/txt/";
-    private static final String PDF_OUTPUT_DIR = "src/main/resources/output/pdf/";
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/invoiceapp";
-    private static final String DB_USER = "root";
-    private static final String DB_PASSWORD = "SUP3R_p@ss";
+    private static final String OUTPUT_DIR = ConfigLoader.getProperty("txt.output.path");
+    private static final String PDF_OUTPUT_DIR = ConfigLoader.getProperty("pdf.output.path");
+    private static final String DB_URL = ConfigLoader.getProperty("db.url");;
+    private static final String DB_USER = ConfigLoader.getProperty("db.username");
+    private static final String DB_PASSWORD = ConfigLoader.getProperty("db.password");
     private static final Logger LOGGER = Logger.getLogger(BillGenerator.class.getName());
 
     /*This method generates a text bill for a customer and saves it to a file.
      It also calls methods to generate a PDF bill and save the bill to a database.*/
-    public static void generateTxtBill(String customerId, String customerName, CustomerUsage usage, String year, String issueDate) {
+    public static void generateTxtBill(String customerId, String customerName, CustomerUsage usage, String issueDate) {
+
         // Sanitize customer name for file naming
+        String year = "2023"; // This is the default static year during file generation
         String sanitizedCustomerName = customerName.replaceAll("[^a-zA-Z0-9]", "_");
         //you should change the date here because it will be always the same
         String outputFileName = OUTPUT_DIR + customerId + "_" + sanitizedCustomerName + "_" + year + "_bill.txt";

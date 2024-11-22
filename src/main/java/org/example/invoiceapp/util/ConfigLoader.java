@@ -24,4 +24,3 @@ public class ConfigLoader {
         return properties.getProperty(key);
     }
 }
-// Compare this snippet from src/main/resources/application.properties:

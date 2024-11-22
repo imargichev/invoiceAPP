@@ -3,6 +3,7 @@ package org.example.invoiceapp.billing;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.*;
 import org.example.invoiceapp.data.CustomerUsage;
+import org.example.invoiceapp.util.ConfigLoader;
 
 import java.io.*;
 import java.nio.file.*;
@@ -11,7 +12,7 @@ import java.util.logging.*;
 /*The PdfBillGenerator class is responsible for generating PDF bills for customers based on their electricity usage.
  It provides a method to generate a PDF bill for a specific customer.*/
 public class PdfBillGenerator {
-    private static final String OUTPUT_DIR_PDF = "src/main/resources/output/pdf/";
+    private static final String OUTPUT_DIR_PDF = ConfigLoader.getProperty("pdf.output.path");
     private static final Logger LOGGER = Logger.getLogger(PdfBillGenerator.class.getName());
 
     /*Purpose: Generates a PDF bill for a specific customer based on their electricity usage data.
@@ -20,12 +21,7 @@ public class PdfBillGenerator {
                   CustomerUsage usage - the electricity usage data for the customer.
                   String year - the year for which the bill is generated.*/
     public static void generatePdfBill(String customerId, String customerName, CustomerUsage usage, String year) {
-        try {
-            Files.createDirectories(Paths.get(OUTPUT_DIR_PDF));
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to create output directory", e);
-            return;
-        }
+
 
         String outputFileName = OUTPUT_DIR_PDF + customerId + ".pdf";
         Document document = new Document();
