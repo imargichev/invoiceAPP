@@ -1,95 +1,97 @@
-# Invoice Generator Application
+# InvoiceApp
 
-This is an Invoice Generator application that processes electricity consumption data, calculates the usage costs for customers, generates bills, and stores the data in a database. It validates records, generates PDF and text bills, and saves invalid records for auditing.
+InvoiceApp is a Java-based application that generates and manages customer invoices. It supports generating text and PDF bills based on customer usage data and saving the bill information to a database.
 
 ## Features
-- **Record Validation:** Validates consumption records based on predefined criteria (e.g., non-negative usage values, valid quality).
-- **Bill Generation:** Generates both text and PDF bills based on electricity usage data.
-- **Database Integration:** Saves bill details (usage data and costs) into a MySQL database.
-- **Error Handling:** Writes invalid records to a separate file for auditing.
 
-## Technologies
-- Java 11+
-- iText PDF library
-- MySQL database
-- Logging (Java `Logger`)
+- Generate text and PDF bills for customers
+- Save bill information to a database
+- Configurable file paths and database connection details
+- Logging for tracking bill generation and database operations
 
+## Technologies Used
 
+- Java
+- Spring Boot
+- Maven
+- iText (for PDF generation)
+- MySQL (for database)
 
-markdown
-Copy code
-
-## Installation
+## Getting Started
 
 ### Prerequisites
-- Java 11 or higher
-- MySQL database setup
-- Maven for building the project
 
-### Steps
+- Java 11 or higher
+- Maven
+- MySQL
+
+# Data Field Definitions
+
+The table below describes the fields used in the provided data files:
+
+| **Field Number** | **Name**            | **Description**                                                                                  |
+|-------------------|---------------------|--------------------------------------------------------------------------------------------------|
+| 1                 | **Customer ID**     | The unique ID of the customer (e.g., `300` refers to a customer with ID `300`).                 |
+| 2                 | **Date**            | The date of consumption in the format `dd.mm.yyyy`.                                             |
+| 3                 | **Usage1**          | Energy usage during the period `00:00 - 05:59`.                                                 |
+| 4                 | **Usage2**          | Energy usage during the period `06:00 - 11:59`.                                                 |
+| 5                 | **Usage3**          | Energy usage during the period `12:00 - 17:59`.                                                 |
+| 6                 | **Usage4**          | Energy usage during the period `18:00 - 23:59`.                                                 |
+| 7                 | **Quality**         | Data quality indicator:                                                                         |
+|                   |                     | - **A**: Actual reading (reported by the smart meter).                                          |
+|                   |                     | - **E**: Estimated reading (precise data unavailable).                                          |
+| 8                 | **Error Code**      | Error codes indicating issues:                                                                  |
+|                   |                     | - `76`: Communication failure.                                                                 |
+|                   |                     | - `75`: Other errors (see "Error Description").                                                 |
+| 9                 | **Error Description** | Free-text description of errors for cases where `Error Code = 0`.                              |
+ 
+
+### Installation
 
 1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/invoice-generator.git
-   cd invoice-generator
-Set up your MySQL database:
+    ```sh
+    git clone https://github.com/yourusername/invoiceapp.git
+    cd invoiceapp
+    ```
 
-Create a database named invoiceapp.
-Ensure your MySQL credentials (username, password) are correct in application.properties:
-properties
-Copy code
-db.url=jdbc:mysql://localhost:3306/invoiceapp
-db.username=root
-db.password=yourpassword
-Configure paths in application.properties: Ensure the paths to the input files (input.txt, lookup.txt) and output directories (e.g., pdf/, txt/) are correct for your environment.
+2. Configure the application properties:
+    Update the `src/main/resources/application.properties` file with your database connection details and file paths.
 
-Build the project using Maven:
+3. Build the project:
+    ```sh
+    mvn clean install
+    ```
 
-bash
-Copy code
-mvn clean install
-Run the application:
+4. Run the application:
+    ```sh
+    mvn spring-boot:run
+    ```
 
-bash
-Copy code
-mvn exec:java -Dexec.mainClass="org.example.invoiceapp.Main"
-This will:
+## Configuration
 
-Read the consumption data from input.txt.
-Validate and process the data.
-Generate text and PDF bills.
-Save the valid records to the database.
-Write invalid records to error_records/E_records.txt.
-Configuration
-All file paths and other configurations are externalized in the application.properties file. Modify the properties to match your environment:
+The application properties are configured in the `src/main/resources/application.properties` file. Here are some key properties:
 
-properties
-Copy code
-# Path to the consumption data file
+```ini
+# File paths configuration
 consumption.data.path=src/main/resources/input.txt
-
-# Path to the customer lookup file
 customer.lookup.path=src/main/resources/lookup.txt
-
-# Path to output directories
-pdf.output.path=src/main/resources/output/pdf/
-txt.output.path=src/main/resources/output/txt/
-
-# Error file path for invalid records
 error.file.path=src/main/resources/output/error_records/E_records.txt
 
-# Database credentials
-db.url=jdbc:mysql://localhost:3306/invoiceapp
-db.username=root
-db.password=yourpassword
+# Necessary paths
+pdf.output.path=src/main/resources/output/pdf/
+txt.output.path=src/main/resources/output/txt/
+mainDir.output=src/main/resources/output/
+errorTxt.file.path=src/main/resources/output/error_records/
+
+# Log level configuration
+log.level=INFO
+
 Usage
-1. Reading Data:
-The DataReader class is used to read both consumption data and customer lookup data from the specified files.
-2. Validating Records:
-The RecordValidator class ensures that only valid records are processed based on usage and quality criteria. Invalid records are written to an error file.
-3. Bill Generation:
-The BillGenerator and PdfBillGenerator classes generate text and PDF bills for each customer.
-4. Storing Data:
-Valid records are stored in the database for future reference.
-Contributing
-We welcome contributions! If you have any improvements or suggestions, feel free to fork this project, submit an issue, or open a pull request.
+Place the customer usage data file at the path specified in consumption.data.path.
+Run the application using the command mentioned above.
+The generated bills will be saved in the directories specified in pdf.output.path and txt.output.path.
+Logging
+The application uses Java's built-in logging framework. Log messages are configured to be displayed at the INFO level by default. You can change the log level in the application.properties file.
+
+
+
