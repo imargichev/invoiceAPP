@@ -18,11 +18,7 @@ public class RecordValidator {
     public static List<String> validateRecords(List<String> records) {
         List<String> validRecords = new ArrayList<>();
         try {
-            // Ensure the directory exists
-            Path errorFilePath = Paths.get(ERROR_FILE);
-
-
-            try (BufferedWriter writer = Files.newBufferedWriter(errorFilePath)) {
+            try (BufferedWriter writer = Files.newBufferedWriter(Paths.get(ERROR_FILE))) {
                 for (String line : records) {
                     String[] fields = line.split(",");
                     if (fields.length < 7) {

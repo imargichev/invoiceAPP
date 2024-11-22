@@ -19,27 +19,12 @@ public class Main {
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
-        // Ensure that all directory exists
+        // Ensure that all directory exists and get the file paths
         Initializer.initialize();
-
-        // Fetch the file paths from the application.properties file
-        //Here we get the path to  input.txt
         String consumptionDataFile = ConfigLoader.getProperty("consumption.data.path");
-        //Here we get the date for each client
         String lookupFile = ConfigLoader.getProperty("customer.lookup.path");
 
-
-
-
-        String outputDir = "output";
-        try {
-            Files.createDirectories(Paths.get(outputDir));
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "Failed to create output directory", e);
-        }
-
-
-        // Reading the consumption and customer data
+        // Reading the consumption and customer data from the txt files
         List<String> records = DataReader.readConsumptionData(consumptionDataFile);
         Map<String, String> customerNames = DataReader.readCustomerLookup(lookupFile);
 
