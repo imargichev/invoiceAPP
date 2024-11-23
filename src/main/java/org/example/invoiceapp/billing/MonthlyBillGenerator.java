@@ -26,11 +26,7 @@ public class MonthlyBillGenerator {
     private static final String DAY_PRICE = ConfigLoader.getProperty("day.price");
     private static final String NIGHT_PRICE = ConfigLoader.getProperty("night.price");
 
-    /**
-     * Static initializer:
-     * - Loads the MySQL JDBC driver.
-     * - Creates the "bills" table in the database if it does not already exist.
-     */
+
 
 
     /**

@@ -93,7 +93,7 @@ public class DataValidator {
                         // Extract necessary fields for the error record
                         String customerId = fields[0];
                         String readingDate = fields[1];
-                        String errorCode = "0000";  // Example error code, you can define your own logic
+                        int errorCode = 0000;  // Example error code by default
                         String errorDescription = "Invalid record";
 
                         // Convert readingDate to java.sql.Date
@@ -109,7 +109,7 @@ public class DataValidator {
                         pstmt.setInt(5, energyUsageAfternoon);
                         pstmt.setInt(6, energyUsageEvening);
                         pstmt.setString(7, quality);
-                        pstmt.setInt(8, Integer.parseInt(errorCode));
+                        pstmt.setInt(8, errorCode);
                         pstmt.setString(9, errorDescription);
                         pstmt.executeUpdate();
                         LOGGER.info("Error record saved to database for customer ID: " + customerId);

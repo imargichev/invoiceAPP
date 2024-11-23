@@ -121,8 +121,7 @@ public class BillGeneratorTxtAndPDF {
             document.open();
 
             // Add header with logo and title
-            String logoPath = PDF_LOGO;
-            Image logo = Image.getInstance(logoPath);
+            Image logo = Image.getInstance(PDF_LOGO);
             logo.scaleToFit(100, 100);
             logo.setAlignment(Element.ALIGN_CENTER);
             document.add(logo);
@@ -218,8 +217,8 @@ public class BillGeneratorTxtAndPDF {
 
     // This inner class handles the footer of each page in the PDF document
     private static class FooterHandler extends PdfPageEventHelper {
-        private Font sectionTitleFont;
-        private Font regularFont;
+       final private Font sectionTitleFont;
+      final   private Font regularFont;
 
         public FooterHandler(Font sectionTitleFont, Font regularFont) {
             this.sectionTitleFont = sectionTitleFont;
