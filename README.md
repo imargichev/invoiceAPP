@@ -15,7 +15,7 @@ InvoiceApp is a Java-based application that generates and manages customer invoi
 - Spring Boot
 - Maven
 - iText (for PDF generation)
-- MySQL (for database)
+- MySQL 
 
 ## Getting Started
 
@@ -50,7 +50,7 @@ The table below describes the fields used in the provided data files:
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/invoiceapp.git
+    git clone https://github.com/imargichev/invoiceApp.git
     cd invoiceapp
     ```
 
@@ -66,31 +66,23 @@ The table below describes the fields used in the provided data files:
     ```sh
     mvn spring-boot:run
     ```
-
+    
 ## Configuration
 
-The application properties are configured in the `src/main/resources/application.properties` file. Here are some key properties:
-
-```ini
-# File paths configuration
-consumption.data.path=src/main/resources/input.txt
-customer.lookup.path=src/main/resources/lookup.txt
-error.file.path=src/main/resources/output/error_records/E_records.txt
-
-# Necessary paths
-pdf.output.path=src/main/resources/output/pdf/
-txt.output.path=src/main/resources/output/txt/
-mainDir.output=src/main/resources/output/
-errorTxt.file.path=src/main/resources/output/error_records/
-
-# Log level configuration
-log.level=INFO
-
+The application properties are configured in the `src/main/resources/application.properties` file.
 Usage
-Place the customer usage data file at the path specified in consumption.data.path.
+Place the customer usage data file at the consumption.data.path.
 Run the application using the command mentioned above.
 The generated bills will be saved in the directories specified in pdf.output.path and txt.output.path.
 Logging
+
+Pleaese find the result from the application :
+
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/acbca8ca-cfa2-47d8-a6fb-bf96e8aa2e79">
+
+<img width="450" alt="image" src="https://github.com/user-attachments/assets/ab4dc450-7e32-43fd-a4c0-f2b7c1dc7517">
+
+
 The application uses Java's built-in logging framework. Log messages are configured to be displayed at the INFO level by default. You can change the log level in the application.properties file.
 
 
