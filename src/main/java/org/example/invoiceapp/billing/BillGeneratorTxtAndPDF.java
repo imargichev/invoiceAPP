@@ -22,14 +22,18 @@ import java.util.logging.*;
  * - **CustomerUsage** for electricity usage details.
  * - **Java Logging** for error and status tracking.
  */
-public class BillGenerator {
+public class BillGeneratorTxtAndPDF {
     // Static configuration properties loaded via ConfigLoader
     private static final String OUTPUT_DIR = ConfigLoader.getProperty("txt.output.path");
     private static final String PDF_OUTPUT_DIR = ConfigLoader.getProperty("pdf.output.path");
     private static final String DB_URL = ConfigLoader.getProperty("db.url");
     private static final String DB_USER = ConfigLoader.getProperty("db.username");
     private static final String DB_PASSWORD = ConfigLoader.getProperty("db.password");
-    private static final Logger LOGGER = Logger.getLogger(BillGenerator.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(BillGeneratorTxtAndPDF.class.getName());
+    private static final String DAY_PRICE = ConfigLoader.getProperty("day.price");
+    private static final String NIGHT_PRICE = ConfigLoader.getProperty("night.price");
+    private static final String PDF_FONT = ConfigLoader.getProperty("pdf.font");
+    private static final String PDF_LOGO = ConfigLoader.getProperty("pdf.logo");
 
     /**
      * Generates a plain text bill for the given customer and saves it to a file.
@@ -47,8 +51,8 @@ public class BillGenerator {
         // You should change the date here because it will be always the same
         String outputFileName = OUTPUT_DIR + customerId + "_" + sanitizedCustomerName + "_" + year + "_bill.txt";
         // Calculate electricity costs
-        double daytimeCost = usage.getDaytimeUsage() * 0.15;
-        double nighttimeCost = usage.getNighttimeUsage() * 0.05;
+        double daytimeCost = usage.getDaytimeUsage() * Double.parseDouble(DAY_PRICE);
+        double nighttimeCost = usage.getNighttimeUsage() * Double.parseDouble(NIGHT_PRICE);
         double totalCost = daytimeCost + nighttimeCost;
 
         // Generate and save the text bill
@@ -107,7 +111,7 @@ public class BillGenerator {
 
         try {
             Files.createDirectories(Paths.get(PDF_OUTPUT_DIR));
-            BaseFont baseFont = BaseFont.createFont("src/main/resources/fonts/DejaVuSans.ttf", BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
+            BaseFont baseFont = BaseFont.createFont(PDF_FONT, BaseFont.IDENTITY_H, BaseFont.EMBEDDED);
             Font titleFont = new Font(baseFont, 18, Font.BOLD);
             Font sectionTitleFont = new Font(baseFont, 14, Font.BOLD);
             Font regularFont = new Font(baseFont, 12);
@@ -117,7 +121,7 @@ public class BillGenerator {
             document.open();
 
             // Add header with logo and title
-            String logoPath = "src/main/resources/logo/logo.png";
+            String logoPath = PDF_LOGO;
             Image logo = Image.getInstance(logoPath);
             logo.scaleToFit(100, 100);
             logo.setAlignment(Element.ALIGN_CENTER);
@@ -257,8 +261,8 @@ public class BillGenerator {
             pstmt.setString(2, customerName);
             pstmt.setInt(3, usage.getDaytimeUsage());
             pstmt.setInt(4, usage.getNighttimeUsage());
-            pstmt.setDouble(5, usage.getDaytimeUsage() * 0.15);
-            pstmt.setDouble(6, usage.getNighttimeUsage() * 0.05);
+            pstmt.setDouble(5, usage.getDaytimeUsage() * Double.parseDouble(DAY_PRICE));
+            pstmt.setDouble(6, usage.getNighttimeUsage() * Double.parseDouble(NIGHT_PRICE));
             int rowsAffected = pstmt.executeUpdate();
             LOGGER.info("Rows affected: " + rowsAffected);
             LOGGER.info("Bill saved to database for customer ID: " + customerId);

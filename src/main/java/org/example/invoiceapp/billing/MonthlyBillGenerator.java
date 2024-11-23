@@ -23,37 +23,15 @@ public class MonthlyBillGenerator {
     private static final String DB_USER = ConfigLoader.getProperty("db.username");
     private static final String DB_PASSWORD = ConfigLoader.getProperty("db.password");
     private static final Logger LOGGER = Logger.getLogger(MonthlyBillGenerator.class.getName());
+    private static final String DAY_PRICE = ConfigLoader.getProperty("day.price");
+    private static final String NIGHT_PRICE = ConfigLoader.getProperty("night.price");
 
     /**
      * Static initializer:
      * - Loads the MySQL JDBC driver.
      * - Creates the "bills" table in the database if it does not already exist.
      */
-    static {
-        try {
-            // Load MySQL JDBC driver
-            Class.forName("com.mysql.cj.jdbc.Driver");
 
-            // Establish a database connection and create the "bills" table if it doesn't exist
-            try (Connection conn = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
-                 Statement stmt = conn.createStatement()) {
-                String sql = "CREATE TABLE IF NOT EXISTS bills (" +
-                        "id INT AUTO_INCREMENT PRIMARY KEY," +
-                        "customer_id VARCHAR(255) NOT NULL," +
-                        "customer_name VARCHAR(255) NOT NULL," +
-                        "daytime_usage INT NOT NULL," +
-                        "nighttime_usage INT NOT NULL," +
-                        "daytime_cost DOUBLE NOT NULL," +
-                        "nighttime_cost DOUBLE NOT NULL)";
-                stmt.execute(sql);
-                LOGGER.info("Database table created or already exists.");
-            }
-        } catch (ClassNotFoundException e) {
-            LOGGER.log(Level.SEVERE, "MySQL JDBC Driver not found", e);
-        } catch (SQLException e) {
-            LOGGER.log(Level.SEVERE, "Database table creation failed", e);
-        }
-    }
 
     /**
      * Loads customer names from the lookup file.
@@ -127,8 +105,8 @@ public class MonthlyBillGenerator {
             pstmt.setString(2, customerName);
             pstmt.setInt(3, usage.getDaytimeUsage());
             pstmt.setInt(4, usage.getNighttimeUsage());
-            pstmt.setDouble(5, usage.getDaytimeUsage() * 0.15);
-            pstmt.setDouble(6, usage.getNighttimeUsage() * 0.05);
+            pstmt.setDouble(5, usage.getDaytimeUsage() * Double.parseDouble(DAY_PRICE));
+            pstmt.setDouble(6, usage.getNighttimeUsage() * Double.parseDouble(NIGHT_PRICE));
             pstmt.executeUpdate();
             LOGGER.info("Bill saved to database for customer ID: " + customerId);
         } catch (SQLException e) {

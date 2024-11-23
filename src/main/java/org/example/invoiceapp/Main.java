@@ -1,11 +1,10 @@
 package org.example.invoiceapp;
 
-import org.example.invoiceapp.billing.BillGenerator;
+import org.example.invoiceapp.billing.BillGeneratorTxtAndPDF;
 import org.example.invoiceapp.billing.MonthlyUsageCalculator;
 import org.example.invoiceapp.data.CustomerUsage;
-import org.example.invoiceapp.data.DataReader;
-import org.example.invoiceapp.data.RecordValidator;
-import org.example.invoiceapp.util.ConfigLoader;
+import org.example.invoiceapp.data.DataReaderFromInputFiles;
+import org.example.invoiceapp.data.DataValidator;
 import org.example.invoiceapp.util.Initializer;
 
 
@@ -24,20 +23,19 @@ import java.util.logging.*;
  *
  */
 public class Main {
+
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
     public static void main(String[] args) {
         // Ensure required directories exist and load file paths
         Initializer.initialize();
-        String consumptionDataFile = ConfigLoader.getProperty("consumption.data.path");
-        String lookupFile = ConfigLoader.getProperty("customer.lookup.path");
 
         // Read data from files
-        List<String> records = DataReader.readConsumptionData(consumptionDataFile);
-        Map<String, String> customerNames = DataReader.readCustomerLookup(lookupFile);
+        List<String> records = DataReaderFromInputFiles.readConsumptionData();
+        Map<String, String> customerNames = DataReaderFromInputFiles.readCustomerLookup();
 
         // Validate and filter records
-        List<String> validRecords = RecordValidator.validateRecords(records);
+        List<String> validRecords = DataValidator.validateRecords(records);
         Map<String, CustomerUsage> usageMap = MonthlyUsageCalculator.calculateMonthlyUsage(validRecords);
 
         // Generate bills for customers
@@ -50,7 +48,7 @@ public class Main {
                 // Extract issue date from records
                 String issueDate = extractIssueDate(records, customerId);
                 // Generate text bill
-                BillGenerator.generateTxtBill(customerId, customerName, usage, issueDate);
+                BillGeneratorTxtAndPDF.generateTxtBill(customerId, customerName, usage, issueDate);
             } else {
                 LOGGER.warning("Customer name not found for ID: " + customerId);
             }
