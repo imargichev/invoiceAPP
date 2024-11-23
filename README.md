@@ -75,8 +75,10 @@ Place the customer usage data file at the consumption.data.path.
 Run the application using the command mentioned above.
 The generated bills will be saved in the directories specified in pdf.output.path and txt.output.path.
 Logging
+
 Pleaese find the result from the application : 
 <img width="296" alt="image" src="https://github.com/user-attachments/assets/acbca8ca-cfa2-47d8-a6fb-bf96e8aa2e79">
+
 <img width="239" alt="image" src="https://github.com/user-attachments/assets/ab4dc450-7e32-43fd-a4c0-f2b7c1dc7517">
 
 
