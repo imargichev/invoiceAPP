@@ -68,14 +68,14 @@ public class MonthlyUsageCalculator {
 
             // Extract customer ID and usage values for the four time periods
             String customerId = fields[0];
-            int usage1 = Integer.parseInt(fields[2]); // Nighttime: 00:00 - 05:59
-            int usage2 = Integer.parseInt(fields[3]); // Daytime: 06:00 - 11:59
-            int usage3 = Integer.parseInt(fields[4]); // Daytime: 12:00 - 17:59
-            int usage4 = Integer.parseInt(fields[5]); // Nighttime: 18:00 - 23:59
+            int energyUsageEarlyMorning = Integer.parseInt(fields[2]); // Nighttime: 00:00 - 05:59
+            int energyUsageMorning = Integer.parseInt(fields[3]); // Daytime: 06:00 - 11:59
+            int energyUsageAfternoon = Integer.parseInt(fields[4]); // Daytime: 12:00 - 17:59
+            int energyUsageEvening = Integer.parseInt(fields[5]); // Nighttime: 18:00 - 23:59
 
             // Calculate the total daytime and nighttime usage for the current record
-            int daytimeUsage = usage2 + usage3;
-            int nighttimeUsage = usage1 + usage4;
+            int daytimeUsage = energyUsageMorning + energyUsageAfternoon;
+            int nighttimeUsage = energyUsageEarlyMorning + energyUsageEvening;
 
             // Get existing customer usage data or create a new one
             CustomerUsage usage = usageMap.getOrDefault(customerId, new CustomerUsage());

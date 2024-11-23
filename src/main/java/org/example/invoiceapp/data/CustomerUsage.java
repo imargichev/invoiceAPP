@@ -3,12 +3,6 @@ package org.example.invoiceapp.data;
 /**
  * The `CustomerUsage` class represents a customer's electricity usage,
  * specifically divided into daytime and nighttime usage.
- * It provides methods to manage (add to) usage data and retrieve the current values.
- * *
- * Responsibilities:
- * - Track electricity usage for daytime and nighttime separately.
- * - Allow updates to usage values.
- * - Provide access to current usage information.
  */
 public class CustomerUsage {
 

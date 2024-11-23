@@ -75,3 +75,31 @@ RecordValidator
 Purpose: Validates records and separates valid and invalid records.
 Method:
 validateRecords(String filePath): Validates records and writes invalid records to a separate file.
+----
+* <p>
+ * Workflow:
+ * 1. Initialize required directories and load file paths from configuration.
+ * 2. Read consumption data and customer lookup data from the specified files.
+ * 3. Validate the consumption records and filter out invalid entries.
+ * 4. Calculate the monthly usage for each customer based on the validated records.
+ * 5. Generate bills for each customer using their usage data and lookup information.
+
+* </p>**
+ * The `DataReader` class is responsible for reading data files related to consumption
+ * and customer information. It handles loading consumption data into a list and
+ * customer lookup data into a map, and provides error handling and logging for file reading operations.
+ * *
+ * Responsibilities:
+ * - Read consumption data from a specified file path and return it as a list of strings.
+ * - Read customer lookup data from a specified file path and return it as a map with customer IDs and names.
+ * - Handle IOExceptions and log relevant messages during file reading operations.
+ *//**
+ * The `CustomerUsage` class represents a customer's electricity usage,
+ * specifically divided into daytime and nighttime usage.
+ * It provides methods to manage (add to) usage data and retrieve the current values.
+ * *
+ * Responsibilities:
+ * - Track electricity usage for daytime and nighttime separately.
+ * - Allow updates to usage values.
+ * - Provide access to current usage information.
+ */

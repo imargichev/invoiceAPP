@@ -8,13 +8,6 @@ import org.example.invoiceapp.util.ConfigLoader;
 
 /**
  * The `DataReader` class is responsible for reading data files related to consumption
- * and customer information. It handles loading consumption data into a list and
- * customer lookup data into a map, and provides error handling and logging for file reading operations.
- * *
- * Responsibilities:
- * - Read consumption data from a specified file path and return it as a list of strings.
- * - Read customer lookup data from a specified file path and return it as a map with customer IDs and names.
- * - Handle IOExceptions and log relevant messages during file reading operations.
  */
 public class DataReader {
 

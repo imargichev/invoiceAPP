@@ -22,23 +22,10 @@ import java.util.logging.*;
  * and generates text-based bills for valid customer records.
  * </p>
  *
- * <p>
- * Workflow:
- * 1. Initialize required directories and load file paths from configuration.
- * 2. Read consumption data and customer lookup data from the specified files.
- * 3. Validate the consumption records and filter out invalid entries.
- * 4. Calculate the monthly usage for each customer based on the validated records.
- * 5. Generate bills for each customer using their usage data and lookup information.
- * </p>
  */
 public class Main {
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
 
-    /**
-     * Entry point of the application.
-     *
-     * @param args command-line arguments (not used in this application)
-     */
     public static void main(String[] args) {
         // Ensure required directories exist and load file paths
         Initializer.initialize();

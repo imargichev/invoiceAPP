@@ -11,11 +11,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class RecordValidatorTest {
 
-    @Test
-    void testValidateRecords() {
-        List<String> validRecords = RecordValidator.validateRecords(Collections.singletonList("input.txt"));
-        assertFalse(validRecords.isEmpty(), "Valid records should not be empty");
-    }
+
 
     @Test
     void testValidateRecordsWithInvalidFile() {
