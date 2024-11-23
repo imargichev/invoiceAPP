@@ -78,9 +78,9 @@ Logging
 
 Pleaese find the result from the application :
 
-<img width="296" alt="image" src="https://github.com/user-attachments/assets/acbca8ca-cfa2-47d8-a6fb-bf96e8aa2e79">
+<img width="600" alt="image" src="https://github.com/user-attachments/assets/acbca8ca-cfa2-47d8-a6fb-bf96e8aa2e79">
 
-<img width="239" alt="image" src="https://github.com/user-attachments/assets/ab4dc450-7e32-43fd-a4c0-f2b7c1dc7517">
+<img width="450" alt="image" src="https://github.com/user-attachments/assets/ab4dc450-7e32-43fd-a4c0-f2b7c1dc7517">
 
 
 The application uses Java's built-in logging framework. Log messages are configured to be displayed at the INFO level by default. You can change the log level in the application.properties file.
