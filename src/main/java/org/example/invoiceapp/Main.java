@@ -5,12 +5,17 @@ import org.example.invoiceapp.billing.MonthlyUsageCalculator;
 import org.example.invoiceapp.data.CustomerUsage;
 import org.example.invoiceapp.data.DataReaderFromInputFiles;
 import org.example.invoiceapp.data.DataValidator;
+import org.example.invoiceapp.util.ConfigLoader;
 import org.example.invoiceapp.util.Initializer;
 
-
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.*;
+
+import static org.example.invoiceapp.data.FileProcessor.processFiles;
+
 /**
  * Main class for the InvoiceApp application.
  *
@@ -25,10 +30,20 @@ import java.util.logging.*;
 public class Main {
 
     private static final Logger LOGGER = Logger.getLogger(Main.class.getName());
+    private static final Path INPUT_FILE = Path.of(ConfigLoader.getProperty("consumption.data.path"));
+    private static final Path LOOKUP_FILE = Path.of(ConfigLoader.getProperty("customer.lookup.path"));
 
     public static void main(String[] args) {
+
+        // Check if required files exist
+        if (!Files.exists(INPUT_FILE) || !Files.exists(LOOKUP_FILE)) {
+            LOGGER.severe("Required input files are missing. Terminating the program.");
+            System.exit(1);
+        }
+
         // Ensure required directories exist and load file paths
         Initializer.initialize();
+
 
         // Read data from files
         List<String> records = DataReaderFromInputFiles.readConsumptionData();
@@ -53,6 +68,9 @@ public class Main {
                 LOGGER.warning("Customer name not found for ID: " + customerId);
             }
         }
+
+        // Process files at the end
+        processFiles();
     }
 
     /**
